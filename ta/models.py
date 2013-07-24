@@ -143,7 +143,7 @@ class Amazon_NR(models.Model):
     productcode = models.CharField(primary_key=True,max_length=250)
     timestamp = models.DateTimeField(auto_now=True)
     def __unicode__(self):
-        return self.book.title
+        return self.productcode
 
     
 class AmazonRank_NR(models.Model):
@@ -188,5 +188,15 @@ class AmazonMongoTradeIn(models.Model):
     latest_price = models.ForeignKey('Price_NR', related_name='lp')
     profitable = models.IntegerField(null=True)
 
-    def __unicode__(self):
-        return self.amazon
+
+class AmazonMongoTradeIn_NJ(models.Model):
+    title= models.CharField(max_length=250)
+    pckey = models.CharField(max_length=250)
+    isbn= models.CharField(max_length=250,null=True)
+    isbn10=models.CharField(max_length=250,null=True)
+    author = models.CharField(max_length=250,null=True)
+    productcode = models.CharField(primary_key=True,max_length=250)
+    timestamp = models.DateTimeField(auto_now=True)
+    buy = models.FloatField(null=True)
+    sell = models.FloatField(null=True)
+    profitable = models.IntegerField(null=True)

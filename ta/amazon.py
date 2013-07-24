@@ -2,7 +2,7 @@ from lxml import html as lhtml
 from pyquery import PyQuery as pq
 from lxml import etree
 import requests
-from models import AmazonMongoTradeIn, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
+from models import AmazonMongoTradeIn, AmazonMongoTradeIn_NJ, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
 import re
 import tasks
 
@@ -138,22 +138,11 @@ def getAmazonBooksOnTradeinPage(url, page):
         # print title
         # print pc
 
-        am = AmazonMongoTradeIn()
+        am = AmazonMongoTradeIn_NJ()
 
-        book = Book_NR()
-        book.pckey = pc[0]
-        book.title = title
-        book.save()
-
-        amazon = Amazon_NR()
-        amazon.book = book
-        amazon.productcode = pc[0]
-        amazon.save()
-        am.amazon = amazon
-
-        price = Price_NR()
-        price.save()
-        am.latest_price = price
+        am.pckey = pc[0]
+        am.title = title
+        am.productcode = pc[0]
         am.profitable = 0
 
         am.save()
