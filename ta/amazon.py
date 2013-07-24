@@ -124,7 +124,7 @@ def countBooksInCategory(url):
 def getAmazonBooksOnTradeinPage(url, page):
     '''Gets all the books on the tradein page'''
     print ('Getting books for ' + url + '&page=' + str(page))
-    content = retrievePage(url + "&page=" + str(page))
+    content = retrievePage("http://amazon.com" + url + "&page=" + str(page))
     d = pq(content)
 
     s = d('.list.results > div')

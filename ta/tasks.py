@@ -64,8 +64,6 @@ def addCat(x):
 
 @task(name='ta.tasks.scanTradeInPage', ignore_result=True)
 def scanTradeInPage(x, i):
-    print x
-    print i
     amazon.getAmazonBooksOnTradeinPage(x, i)
 
 
