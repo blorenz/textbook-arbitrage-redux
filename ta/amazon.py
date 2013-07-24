@@ -251,9 +251,9 @@ def addCategoryToScan(url):
 
 def scanCategories():
     objs = Amazon_Textbook_Section_NR.objects.all()
-    for obj in iter(objs):
-        scanCategoryAndAddBooks(obj)
-        # tasks.task_scanCategoryAndAddBooks.delay(obj)
+    for obj in objs:
+        # scanCategoryAndAddBooks(obj)
+        tasks.task_scanCategoryAndAddBooks.delay(obj)
 
 
 def scanCategoryAndAddBooks(cat):
