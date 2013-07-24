@@ -259,7 +259,7 @@ def scanCategoryAndAddBooks(cat):
 def parseUsedPage(amnj):
     # if not am.latest_price:
     #     am.price = Price_NR()
-    url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (am.amazon.productcode)
+    url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (amnj.amazon.productcode)
     try:
         content = retrievePage(url)
     except:
@@ -272,7 +272,7 @@ def parseUsedPage(amnj):
         buyprice = matches.group(1)
 
     # results = html.xpath("//tbody[@class='result']")
-    results = d('.olpOffer')
+    results = d('.olpOffer')m,
 
     for result in results:
         if re.search('Acceptable', d('.olpCondition',result)[0].text_content()):
