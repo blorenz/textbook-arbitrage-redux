@@ -148,6 +148,7 @@ def getAmazonBooksOnTradeinPage(url, page):
         am.save()
 
 
+# not needed with latest
 def getDepartmentContainer(containers):
     for container in containers:
 # Selects [New Releases, Departments, ...]
@@ -162,6 +163,7 @@ def getDepartmentContainer(containers):
     return None
 
 
+# not needed with latest
 def getFormatContainer(containers):
     for container in containers:
         s = container.cssselect("div.narrowItemHeading")
@@ -254,46 +256,48 @@ def scanCategoryAndAddBooks(cat):
         # tasks.scanTradeInPage(cat.url,i)
 
 
-def parseUsedPage(am):
-    if not am.latest_price:
-        am.price = Price_NR()
+def parseUsedPage(amnj):
+    # if not am.latest_price:
+    #     am.price = Price_NR()
     url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (am.amazon.productcode)
     try:
         content = retrievePage(url)
     except:
         return
-    html = lhtml.fromstring(content)
-    matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', html.text_content())
+    # html = lhtml.fromstring(content)
+    d = pq(content)
+    matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', d[0].text_content())
     buyprice = None
     if matches != None:
         buyprice = matches.group(1)
 
-    results = html.xpath("//tbody[@class='result']")
+    # results = html.xpath("//tbody[@class='result']")
+    results = d('.olpOffer')
 
     for result in results:
-        if re.search('Acceptable', result.cssselect('.condition')[0].text_content()):
+        if re.search('Acceptable', d('.olpCondition',result)[0].text_content()):
             continue
-        if re.search('nternational', result.cssselect('.comments')[0].text_content()):
+        if re.search('nternational', d('.comments',result)[0].text_content()):
             continue
 
-        sellprice = re.match('\$?(\d*\.\d{2})', result.cssselect('.price')[0].text_content())
+        sellprice = re.match('\$?(\d*\.\d{2})', d('.olpOfferPrice',result)[0].text_content())
         if sellprice != None and buyprice != None:
             sellprice = sellprice.group(1)
-
-            price = Price_NR(buy=buyprice, sell=sellprice)
+            amnj.buy = buyprice
+            amnj.sell = sellprice
+            # price = Price_NR(buy=buyprice, sell=sellprice)
         else:
-            price = Price_NR()
+            # price = Price_NR()
+            amnj.buy = buyprice
+            amnj.sell = sellprice
 
-        #am.prices.append(price)
-        am.latest_price = price
-
-        if price.buy and price.sell:
-            roi = getROI(price.buy, price.sell)
+        if amnj.buy and amnj.sell:
+            roi = getROI(amnj.buy, amnj.sell)
             if roi:
-                am.profitable = roi
+                amnj.profitable = roi
             else:
-                am.profitable = 0
-        am.save()
+                amnj.profitable = 0
+        amnj.save()
         #print result.cssselect('.condition')[0].text_content()
         break
 
