@@ -252,17 +252,17 @@ def addCategoryToScan(url):
 def scanCategories():
     objs = Amazon_Textbook_Section_NR.objects.all()
     for obj in iter(objs):
-        # scanCategoryAndAddBooks(obj)
-        tasks.task_scanCategoryAndAddBooks.delay(obj)
+        scanCategoryAndAddBooks(obj)
+        # tasks.task_scanCategoryAndAddBooks.delay(obj)
 
 
 def scanCategoryAndAddBooks(cat):
     books = countBooksInCategory(cat.url)
-    #print "Counted " + str(books)
+    print "Counted " + str(books)
     pages = int(books) / 12 + 1
     for i in range(1, pages + 1):
-        tasks.scanTradeInPage.delay(cat.url, i)
-        # tasks.scanTradeInPage(cat.url,i)
+        # tasks.scanTradeInPage.delay(cat.url, i)
+        tasks.scanTradeInPage(cat.url,i)
 
 
 def parseUsedPage(am):
