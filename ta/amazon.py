@@ -103,7 +103,7 @@ def detailAllBooks():
 def countBooksInCategory(url):
     '''Counts how may books are in each category, to intelligently scrape the correct number of pages.'''
     print 'counting book in %s' % (url,)
-    content = retrievePage(url)
+    content = retrievePage("http://amazon.com" + url)
     d = pq(content)
 
     s = d("#resultCount")
