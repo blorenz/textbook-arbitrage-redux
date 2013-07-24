@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Login to find the Deals!</title>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<style type="text/css">
+span#lab {float:left;}
+input {float:left;}
+</style>
+</head>
+<body>
+<span id="lab">Login:</span>
+<form method="POST" >
+{% csrf_token %}
+	<input id="l" name="l" type="text">
+	<input id="p" name="p" type="password">
+	<input id="s" type="submit" value="Show me Deals!">
+</form>
+</body>
+<script type="text/javascript">
+$(document).ready(function(){
+
+
+});
+
+</script>
+</html>

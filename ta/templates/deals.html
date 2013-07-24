@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Here's the Deals!</title>
+
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="http://datatables.net/download/build/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="{{STATIC_URL}}jquery.colorbox-min.js"></script>
+<link  rel="stylesheet" type="text/css" href="{{STATIC_URL}}demo_table.css" />
+<link  rel="stylesheet" type="text/css" href="{{STATIC_URL}}colorbox.css" />
+
+<style type="text/css">
+#top-wrap .top-left {float:left; padding-right: 30px;}
+#top-wrap .top-right {float: right; font-weight: bold;}
+#top-wrap .top-right a {font-size: 10px; text-decoration: none; font-weight: bold;}
+.fixer {clear:both;}
+#results td {position: relative;}
+#results td img {left: 10px; position: relative;}
+#getlatestspan {padding-left: 20px; }
+</style>
+</head>
+<body>
+<div id="top-wrap">
+<span class="top-left">Deals from {{totalBooks}} books;
+<input type="button" value="Get Latest Prices" id="getlatest"><span id="getlatestspan"></span></span>
+<span class="top-right">Hiya, {{username}}!  <a href="/logout">Logout</a>
+</span>
+</div>
+<div class="fixer"><a href="https://www.amazon.com/gp/tradein/multicondition-your-account?ie=UTF8&*Version*=1&*entries*=0&">Go to your Amazon Trade-In Account</a>
+</div>
+<div>
+<form method="GET" action="">
+<label for="name">Search Amazon</label>
+<input type="text" length="100" name="search" />
+<input type="submit" value="Go!"/>
+</form>
+</div>
+<div id="chart1"></div>
+<table id="results" class="fixer">
+	<thead>
+	<tr><td>URL</td><td>Buy</td><td>Sell</td><td>Net</td><td>Return on Investment (%)</td><td>RoI + Shipping (%)</td><td>Timestamp</td></tr>
+	</thead>
+	<tbody>
+	{% for key,s in dictItems.items %}
+	<tr product="{{s.8}}"><td class="links"><a class="descLink" target="_blank" href="{{s.0}}">{{s.1}}</a><a target="_blank" href="#" class="historicalBuy"><img src="/static/icon_open_new_window.gif"></a></td><td>{{s.2}}</td><td><a class="cb" target="_blank" href="{{s.9}}">{{s.3}}</a></td><td>{{s.4}}</td><td>{{s.5}}</td><td>{{s.6}}</td><td>{{s.7}}</td></tr>
+	{% endfor %}
+	</tbody>
+</table>
+</body>
+<script type="text/javascript">
+
+var doAjax = function(code) {
+	 $.ajax({
+			type: "GET",
+			url: "/lazy/",
+			data: "product=" + code
+			// Add success function
+		 });	
+}
+
+$(document).ready(function(){
+	
+//	$('tbody tr a').bind("click", function() {
+//		 doAjax($(this).parent().parent().attr('product'))
+		 	 
+		 //});
+
+ $(".historicalBuy").click(function() {
+		var $el = $(this);
+		$.ajax({
+				type: "GET",
+			url: "/historical/",
+			data: "type=buy&amazoncode=" + $(this).parent().parent().attr('product'),
+			success: function(msg) {
+				//$.colorbox({width:"90%", height:"90%", html:'<div id="chart1"></div>'});
+	$('#chart1').empty();
+					 var line1= $.parseJSON(msg);
+
+  var plot1 = $.jqplot('chart1', [line1], {
+    title:'Amazon Trade-in Values for <i>' + $(".descLink",$el.parent()).text() + '</i>',
+    axes:{xaxis:{renderer:$.jqplot.DateAxisRenderer},
+ yaxis: {
+              tickOptions:{formatString:'$%.2f'}
+          }},
+ 	seriesDefaults: {
+        showMarker:false,
+        pointLabels: { show:true }
+      },
+
+cursor:{
+        show: true,
+        zoom:true,
+        showTooltip:true
+      } 
+  });		
+			}
+			// Add success function
+					
+
+	});
+	});
+
+
+//$("td.links a:first-child").colorbox({width:"90%", height:"90%", iframe:true}); 
+//$("a.cb").colorbox({width:"90%", height:"90%", iframe:true}); 
+ 
+ $('#results').dataTable({
+	//"sPaginationType": "full_numbers",
+"bPaginate": false,
+        "bLengthChange": false,
+        "aaSorting": [[ 5, "desc" ]]
+	//"bScrollInfinite": true,
+        //"bScrollCollapse": true,
+        //"sScrollY": "300px"
+    });
+
+ 	
+
+   
+
+    $("#getlatest").click(function(){
+	
+	$.ajax({
+			type: "GET",
+			url: "/known/",
+			beforeSend: function() {
+				$('#getlatestspan').empty().show().html("Getting Latest! Please Wait Until I Disappear...");
+			},
+			success: function() {
+				$('#getlatestspan').empty().html("Got Latest!").fadeOut('slow').empty();
+				}
+			// Add success function
+		 });	
+
+
+	});
+	
+ 
+ 
+ 
+});
+
+</script>
+</html>

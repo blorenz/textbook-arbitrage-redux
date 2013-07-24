@@ -1,0 +1,15 @@
+<html>
+<head>
+<title>Categories to Parse?</title>
+</head>
+<body>
+
+<form method="POST" action="/cats/">
+{% csrf_token %}
+
+<textarea name="categories" cols="100" rows="30">
+</textarea>
+<input type="submit" name="submit" />
+</form>
+<body>
+</html>
