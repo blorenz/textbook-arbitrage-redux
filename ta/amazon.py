@@ -266,7 +266,7 @@ def parseUsedPage(amnj):
         return
     # html = lhtml.fromstring(content)
     d = pq(content)
-    matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', d[0].text_content())
+    matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', d('#olpProduct + div').text())
     buyprice = None
     if matches != None:
         buyprice = matches.group(1)
@@ -275,12 +275,12 @@ def parseUsedPage(amnj):
     results = d('.olpOffer')
 
     for result in results:
-        if re.search('Acceptable', d('.olpCondition',result)[0].text_content()):
+        if re.search('Acceptable', d('.olpCondition',result).text()):
             continue
-        if re.search('nternational', d('.comments',result)[0].text_content()):
+        if re.search('nternational', d('.comments',result).text()):
             continue
 
-        sellprice = re.match('\$?(\d*\.\d{2})', d('.olpOfferPrice',result)[0].text_content())
+        sellprice = re.match('\$?(\d*\.\d{2})', d('.olpOfferPrice',result).text())
         if sellprice != None and buyprice != None:
             sellprice = sellprice.group(1)
             amnj.buy = buyprice
