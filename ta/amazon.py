@@ -261,8 +261,8 @@ def scanCategoryAndAddBooks(cat):
     print "Counted " + str(books)
     pages = int(books) / 12 + 1
     for i in range(1, pages + 1):
-        # tasks.scanTradeInPage.delay(cat.url, i)
-        tasks.scanTradeInPage(cat.url,i)
+        tasks.scanTradeInPage.delay(cat.url, i)
+        # tasks.scanTradeInPage(cat.url,i)
 
 
 def parseUsedPage(am):
