@@ -272,7 +272,7 @@ def parseUsedPage(amnj):
         buyprice = matches.group(1)
 
     # results = html.xpath("//tbody[@class='result']")
-    results = d('.olpOffer')m,
+    results = d('.olpOffer')
 
     for result in results:
         if re.search('Acceptable', d('.olpCondition',result)[0].text_content()):
