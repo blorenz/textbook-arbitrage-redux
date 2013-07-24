@@ -202,4 +202,4 @@ class AmazonMongoTradeIn_NJ(models.Model):
     profitable = models.IntegerField(null=True)
 
     def __unicode__(self):
-        return "%s at T-%f B-%f" % (self.title, self.buy, self.sell,)
+        return "%s at T-%s B-%s" % (self.title, str(self.buy), str(self.sell),)
