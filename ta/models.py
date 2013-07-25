@@ -202,7 +202,6 @@ class AmazonMongoTradeIn_NJ(models.Model):
     profitable = models.IntegerField(null=True)
     is_profitable = models.BooleanField(default=False)
 
-    @property
     def _is_profitable(self):
         return self.profitable >= PROFITABILITY_THRESHOLD
 
