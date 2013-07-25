@@ -314,7 +314,16 @@ def parseUsedPage(amnj):
                 amnj.profitable = roi
             else:
                 amnj.profitable = 0
-        amnj.save()
+
+
+
+        try:
+            amnj.save()
+        except:
+            print 'Throwing!'
+            print amnj.buy
+            print amnj.sell
+            print amnj.roi
         print 'After! ' + str(amnj)
         #print result.cssselect('.condition')[0].text_content()
         break

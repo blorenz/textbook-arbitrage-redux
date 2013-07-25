@@ -197,8 +197,8 @@ class AmazonMongoTradeIn_NJ(models.Model):
     author = models.CharField(max_length=250,null=True)
     productcode = models.CharField(primary_key=True,max_length=250)
     timestamp = models.DateTimeField(auto_now=True)
-    buy = models.FloatField(null=True) # Amount of Gift Card
-    sell = models.FloatField(null=True) # Amount a Seller sells it for
+    buy = models.FloatField(null=True,blank=True) # Amount of Gift Card
+    sell = models.FloatField(null=True,blank=True) # Amount a Seller sells it for
     profitable = models.IntegerField(null=True)
     is_profitable = models.BooleanField(default=False)
 
