@@ -273,9 +273,9 @@ def parseUsedPage(amnj):
     #     am.price = Price_NR()
     url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (amnj.productcode)
     try:
-        content = retrievePage(url)
-    except:
-        print 'WhhooooooopS! We are not ok'
+        content = retrievePage(url, True)
+    except Exception as e:
+        print 'WhooooooopS! We are not ok: ' + e
         return
     # html = lhtml.fromstring(content)
     d = pq(content)
