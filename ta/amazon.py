@@ -266,6 +266,9 @@ def parseUsedPage(amnj):
         return
     # html = lhtml.fromstring(content)
     d = pq(content)
+    print 'hey there!'
+    print d('#olpProduct + div').text()
+
     matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', d('#olpProduct + div').text())
     buyprice = None
     if matches != None:
