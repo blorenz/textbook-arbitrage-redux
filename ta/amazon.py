@@ -27,7 +27,8 @@ def isGoodProfit(obj):
 
 def retrievePage(url, proxy=None):
 
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11", }
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11",
+               "Host": "www.amazon.com"}
 
     '''if (proxy):
         theProxy = Proxy.objects.order_by('?')[0]
