@@ -275,10 +275,13 @@ def parseUsedPage(amnj):
     results = d('.olpOffer')
 
     for result in results:
-        if re.search('Acceptable', d('.olpCondition',result).text()):
-            continue
-        if re.search('nternational', d('.comments',result).text()):
-            continue
+        try:
+            if re.search('Acceptable', d('.olpCondition',result).text()):
+                continue
+            if re.search('nternational', d('.comments',result).text()):
+                continue
+        except:
+            pass
 
         sellprice = re.match('\$?(\d*\.\d{2})', d('.olpOfferPrice',result).text())
         if sellprice != None and buyprice != None:
