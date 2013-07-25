@@ -1,10 +1,17 @@
 from .models import *
 from django.contrib import admin
 
+
+
+
+class AmazonAdmin(admin.ModelAdmin):
+    list_filter = ('is_profitable',)
+
+
 admin.site.register(Amazon_NR)
 admin.site.register(Amazon_Textbook_Section_NR)
 admin.site.register(AmazonMongoTradeIn)
-admin.site.register(AmazonMongoTradeIn_NJ)
+admin.site.register(AmazonMongoTradeIn_NJ, AmazonAdmin)
 admin.site.register(AmazonRank_NR)
 admin.site.register(AmazonRankCategory_NR)
 admin.site.register(ATS_Middle_NR)
