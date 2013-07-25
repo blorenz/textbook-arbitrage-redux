@@ -341,7 +341,7 @@ def addProxies(s):
     s = s.splitlines()
     for i in s:
         try:
-            Proxy(ip_and_host=i,proxy_type='http').save()
+            Proxy(ip_and_port=i,proxy_type='http').save()
         except:
             pass
 
