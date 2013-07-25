@@ -2,7 +2,7 @@ from lxml import html as lhtml
 from pyquery import PyQuery as pq
 from lxml import etree
 import requests
-from models import AmazonMongoTradeIn, AmazonMongoTradeIn_NJ, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
+from models import Proxy, AmazonMongoTradeIn, AmazonMongoTradeIn_NJ, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
 import re
 import tasks
 
@@ -38,12 +38,15 @@ def retrievePage(url, proxy=None):
 		"User-Agent":"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.71 Safari/537.36",
 	}
 
-    '''if (proxy):
+    if (proxy):
+        # Randomize proxies
         theProxy = Proxy.objects.order_by('?')[0]
         proxy = {theProxy.proxy_type:theProxy.ip_and_port}
         r = requests.get(url,proxies=proxy,headers=headers)
-    else:'''
-    r = requests.get(url, headers=headers)
+    else:
+        r = requests.get(url, headers=headers)
+    if not r.ok:
+        raise Exception("Invalid response")
     return r.content
 
 
@@ -291,7 +294,7 @@ def parseUsedPage(amnj):
             if re.search('nternational', d('.comments',result).text()):
                 continue
         except:
-            pass
+            continue
 
         sellprice = re.match('\$?(\d*\.\d{2})', d('.olpOfferPrice',result).text())
         if sellprice != None and buyprice != None:

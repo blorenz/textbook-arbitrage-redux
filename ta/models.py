@@ -70,9 +70,7 @@ from django.db.models import F
 #    last_timestamp = models.DateTimeField(auto_now=True)
 #
 #    
-#class Proxy(models.Model):
-#    proxy_type = models.CharField(max_length=10)
-#    ip_and_port = models.CharField(max_length=25)
+
 #    
 #class MetaTable(models.Model):
 #    metakey = models.CharField(max_length=255, primary_key=True)
@@ -203,3 +201,11 @@ class AmazonMongoTradeIn_NJ(models.Model):
 
     def __unicode__(self):
         return "%s [T=%s, B=%s, ROI=%s]" % (self.title, str(self.buy), str(self.sell), str(self.profitable))
+
+
+class Proxy(models.Model):
+    proxy_type = models.CharField(max_length=10)
+    ip_and_port = models.CharField(max_length=25)
+
+    def __unicode__(self):
+        return "%s:%s" % (self.proxy_type, self.ip_and_port,)
