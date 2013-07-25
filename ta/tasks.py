@@ -20,9 +20,9 @@ def process_chunk(pks, ignore_result=True):
     #objs = Amazon_NR.objects.filter(pk__in=pks)
     print 'Gonna process a chunk of ' + str(len(pks))
     for p in pks:
-        objs = AmazonMongoTradeIn_NJ.objects.filter(pk=p)
+        print p
+        objs = AmazonMongoTradeIn_NJ.objects.filter(productcode=p)
         for obj in objs:
-            #detailBook(obj)
             amazon.parseUsedPage(obj)
 
 
@@ -30,7 +30,7 @@ def process_chunk(pks, ignore_result=True):
 def process_lots_of_items(ids_to_process):
     return TaskSet(process_chunk.subtask((chunk, ))
                        for chunk in chunks(iter(ids_to_process),
-                                           25)).apply_async()
+                                           25))#.apply_async()
 
 
 @task(name='ta.tasks.process_chunk_extra')
