@@ -315,7 +315,7 @@ def parseUsedPage(amnj):
             else:
                 amnj.profitable = 0
         amnj.save()
-        print 'After! ' + amnj
+        print 'After! ' + str(amnj)
         #print result.cssselect('.condition')[0].text_content()
         break
 
