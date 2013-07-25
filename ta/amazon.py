@@ -336,3 +336,13 @@ def fetchPage(url, add):
     # f = open('/home/seocortex/dropbox/web/static/testing-' + add + '.html', 'w')
     # f.write(content)
     # f.close()
+
+def addProxies(s):
+    s = s.splitlines()
+    for i in s:
+        try:
+            Proxy(ip_and_host=i,proxy_type='http').save()
+        except:
+            pass
+
+
