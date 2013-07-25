@@ -284,6 +284,7 @@ def parseUsedPage(amnj):
     buyprice = None
     if matches != None:
         buyprice = matches.group(1)
+        print "Gift Card is " + buyprice
 
     # results = html.xpath("//tbody[@class='result']")
     results = d('.olpOffer')
@@ -300,13 +301,13 @@ def parseUsedPage(amnj):
         sellprice = re.match('\$?(\d*\.\d{2})', d('.olpOfferPrice',result).text())
         if sellprice != None and buyprice != None:
             sellprice = sellprice.group(1)
+            print "Seller price is " + sellprice
             amnj.buy = buyprice
             amnj.sell = sellprice
             # price = Price_NR(buy=buyprice, sell=sellprice)
         else:
-            # price = Price_NR()
             amnj.buy = buyprice
-            amnj.sell = sellprice
+            amnj.sell = 0
 
         if amnj.buy and amnj.sell:
             roi = getROI(amnj.buy, amnj.sell)
