@@ -260,13 +260,14 @@ def parseUsedPage(amnj):
     # if not am.latest_price:
     #     am.price = Price_NR()
     url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (amnj.productcode)
+    print 'going to ' + url
     try:
         content = retrievePage(url)
     except:
         return
+    print 'content length is ' + len(content)
     # html = lhtml.fromstring(content)
     d = pq(content)
-    print 'hey there!'
     print d('#olpProduct + div').text()
 
     matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', d('#olpProduct + div').text())
