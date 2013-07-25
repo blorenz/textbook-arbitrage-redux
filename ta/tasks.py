@@ -31,7 +31,7 @@ def process_chunk(pks, ignore_result=True):
 def process_lots_of_items(ids_to_process):
     return TaskSet(process_chunk.subtask((chunk, ))
                        for chunk in chunks(iter(ids_to_process),
-                                           25))#.apply_async()
+                                           25)).apply_async()
 
 
 @task(name='ta.tasks.process_chunk_extra')
