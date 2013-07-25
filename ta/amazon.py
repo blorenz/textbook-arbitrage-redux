@@ -42,9 +42,9 @@ def retrievePage(url, proxy=None):
         # Randomize proxies
         theProxy = Proxy.objects.order_by('?')[0]
         proxy = {theProxy.proxy_type:theProxy.ip_and_port}
-        r = requests.get(url,proxies=proxy,headers=headers)
+        r = requests.get(url,proxies=proxy,headers=headers, timeout=10.0)
     else:
-        r = requests.get(url, headers=headers)
+        r = requests.get(url, headers=headers, timeout=5.0 )
     if not r.ok:
         raise Exception("Invalid response")
     return r.content
