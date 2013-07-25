@@ -20,7 +20,7 @@ def process_chunk(pks, ignore_result=True):
     #objs = Amazon_NR.objects.filter(pk__in=pks)
     print 'Gonna process a chunk of ' + str(len(pks))
     for p in pks:
-        objs = AmazonMongoTradeIn.objects.filter(pk=p)
+        objs = AmazonMongoTradeIn_NJ.objects.filter(pk=p)
         for obj in objs:
             #detailBook(obj)
             amazon.parseUsedPage(obj)

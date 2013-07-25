@@ -78,7 +78,7 @@ def checkProfitable(a):
 
 def getProfitableBooks():
     AmazonMongoTradeIn.objects.all().delete()
-    objs = AmazonMongoTradeIn.objects.values_list('id', flat=True)
+    objs = AmazonMongoTradeIn_NJ.objects.values_list('id', flat=True)
     tasks.process_lots_of_items_profitable.delay(objs)
 
 
