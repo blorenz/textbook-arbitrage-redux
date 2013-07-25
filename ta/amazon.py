@@ -275,6 +275,7 @@ def parseUsedPage(amnj):
     try:
         content = retrievePage(url)
     except:
+        print 'WhhooooooopS! We are not ok'
         return
     # html = lhtml.fromstring(content)
     d = pq(content)
@@ -314,6 +315,7 @@ def parseUsedPage(amnj):
             else:
                 amnj.profitable = 0
         amnj.save()
+        print 'After! ' + amnj
         #print result.cssselect('.condition')[0].text_content()
         break
 
