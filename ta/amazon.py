@@ -323,7 +323,7 @@ def parseUsedPage(amnj):
             print 'Throwing!'
             print amnj.buy
             print amnj.sell
-            print amnj.roi
+            print amnj.profitable
         print 'After! ' + str(amnj)
         #print result.cssselect('.condition')[0].text_content()
         break
