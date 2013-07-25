@@ -27,8 +27,7 @@ def isGoodProfit(obj):
 
 def retrievePage(url, proxy=None):
 
-    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11",
-               "Host": "www.amazon.com"}
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.11 (KHTML, like Gecko) Chrome/17.0.963.66 Safari/535.11", }
 
     '''if (proxy):
         theProxy = Proxy.objects.order_by('?')[0]
@@ -261,15 +260,12 @@ def parseUsedPage(amnj):
     # if not am.latest_price:
     #     am.price = Price_NR()
     url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (amnj.productcode)
-    print 'going to ' + url
     try:
         content = retrievePage(url)
     except:
         return
-    print 'content length is ' + len(content)
     # html = lhtml.fromstring(content)
     d = pq(content)
-    print d('#olpProduct + div').text()
 
     matches = re.search(r'a \$?(\d*\.\d{2}) Amazon.com Gift Card', d('#olpProduct + div').text())
     buyprice = None
