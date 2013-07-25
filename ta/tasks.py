@@ -23,6 +23,7 @@ def process_chunk(pks, ignore_result=True):
         print p
         objs = AmazonMongoTradeIn_NJ.objects.filter(productcode=p)
         for obj in objs:
+            print obj
             amazon.parseUsedPage(obj)
 
 
