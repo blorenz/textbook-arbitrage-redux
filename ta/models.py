@@ -87,6 +87,8 @@ from django.db.models import F
 
 # Mongo-izing it!
 
+PROFITABILITY_THRESHOLD = 10
+
 class Amazon_Textbook_Section_NR(models.Model):
     title = models.CharField(max_length=250, null=True)
     url = models.CharField(max_length=500, unique=True)
@@ -198,10 +200,18 @@ class AmazonMongoTradeIn_NJ(models.Model):
     buy = models.FloatField(null=True) # Amount of Gift Card
     sell = models.FloatField(null=True) # Amount a Seller sells it for
     profitable = models.IntegerField(null=True)
+    is_profitable = models.BooleanField(default=False)
+
+    @property
+    def _is_profitable(self):
+        return self.profitable >= PROFITABILITY_THRESHOLD
 
     def __unicode__(self):
         return "%s [T=%s, B=%s, ROI=%s]" % (self.title, str(self.buy), str(self.sell), str(self.profitable))
 
+    def save(self, *args, **kwargs):
+        self.is_profitable = self._is_profitable()
+        return super(AmazonMongoTradeIn_NJ, self).save(*args, **kwargs)
 
 class Proxy(models.Model):
     proxy_type = models.CharField(max_length=10)
