@@ -83,7 +83,7 @@ def getProfitableBooks():
 
 
 def detailAllBooks():
-    objs = AmazonMongoTradeIn_NJ.objects.values_list('id', flat=True)
+    objs = AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True)
     # print 'Objs len is %d' % (len(objs),)
     # print 'ok done with that'
     tasks.process_lots_of_items(objs)
