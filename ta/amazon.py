@@ -275,7 +275,7 @@ def parseUsedPage(amnj):
     try:
         content = retrievePage(url, True)
     except Exception as e:
-        print 'WhooooooopS! We are not ok: ' + e
+        print 'WhooooooopS! We are not ok: ' + str(e)
         return
     # html = lhtml.fromstring(content)
     d = pq(content)
