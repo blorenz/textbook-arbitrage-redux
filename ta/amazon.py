@@ -40,14 +40,10 @@ def retrievePage(url, proxy=None):
 
     if (proxy):
         # Randomize proxies
-        theProxy = Proxy.objects.filter(active=True).order_by('?')[0]
-        proxy = {theProxy.proxy_type:theProxy.ip_and_port}
         r = requests.get(url,proxies=proxy,headers=headers, timeout=10.0)
     else:
         r = requests.get(url, headers=headers, timeout=5.0 )
     if not r.ok:
-        theProxy.active = False
-        theProxy.save()
         raise Exception("Invalid response")
 
     return r.content
@@ -275,9 +271,13 @@ def parseUsedPage(amnj):
     # if not am.latest_price:
     #     am.price = Price_NR()
     url = 'http://www.amazon.com/gp/offer-listing/%s/ref=dp_olp_used?ie=UTF8&condition=used' % (amnj.productcode)
+    theProxy = Proxy.objects.filter(active=True).order_by('?')[0]
+    proxy = {theProxy.proxy_type:theProxy.ip_and_port}
     try:
-        content = retrievePage(url, True)
+        content = retrievePage(url, proxy)
     except Exception as e:
+        theProxy.active = False
+        theProxy.save()
         print 'WhooooooopS! We are not ok: ' + str(e)
         return
     # html = lhtml.fromstring(content)
