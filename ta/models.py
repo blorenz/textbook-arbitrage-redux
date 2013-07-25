@@ -215,6 +215,7 @@ class AmazonMongoTradeIn_NJ(models.Model):
 class Proxy(models.Model):
     proxy_type = models.CharField(max_length=10)
     ip_and_port = models.CharField(max_length=25)
+    active = models.BooleanField(default=True)
 
     def __unicode__(self):
         return "%s:%s" % (self.proxy_type, self.ip_and_port,)
