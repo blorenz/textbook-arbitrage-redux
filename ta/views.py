@@ -80,19 +80,16 @@ def getDeals(request):
     else:
       referer = 'http://www.amazon.com/gp/product/%s/ref=as_li_ss_tl?ie=UTF8&tag=ngre-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=%s'
 
-    totalIndexed = AmazonMongoTradeIn.objects.all().count()#MetaTable_NR.objects.get(metakey="totalIndexed").int_field
-    totalBooks = AmazonMongoTradeIn.objects.all().count()#MetaTable_NR.objects.get(metakey="totalBooks").int_field
-    totalProfitable = AmazonMongoTradeIn.objects.all().count()#MetaTable_NR.objects.get(metakey="totalProfitable").int_field
 
-    objs2 = AmazonMongoTradeIn.objects.filter(profitable__gte=10)
+    objs2 = AmazonMongoTradeIn_NJ.objects.filter(profitable__gte=10)
 
     for obj in iter(objs2):
         ctb = 0
         actb = 0
 
         try:
-            theBuy = float(obj.latest_price.buy)
-            theSell = float(obj.latest_price.sell)
+            theBuy = float(obj.buy)
+            theSell = float(obj.sell)
         except:
             continue
         
@@ -102,9 +99,9 @@ def getDeals(request):
             ctb = round(ctb * 100,2)
             actb = round(actb * 100,2)
             
-            productCode = obj.amazon.productcode
+            productCode = obj.productcode
             dictItems[productCode] = (referer % (productCode, productCode),
-                                 obj.amazon.book.title,
+                                 obj.title,
                                 theBuy,
                                 theSell,
                                 theBuy - theSell,
