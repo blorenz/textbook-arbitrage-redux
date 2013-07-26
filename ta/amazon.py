@@ -61,7 +61,7 @@ def toAscii(content):
 
 def detailAllBooks():
     objs = list(AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True))
-    objs = random.shuffle(objs)
+    random.shuffle(objs)
     print 'Objs len is %d' % (len(objs),)
     print 'ok done with that'
     tasks.process_lots_of_items(objs)
