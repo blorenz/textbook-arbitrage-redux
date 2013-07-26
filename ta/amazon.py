@@ -8,6 +8,8 @@ import tasks
 
 
 def getROI(theBuy, theSell):
+    '''Calculate the Return On Investment of the book -- assuming 3.99 Shipping cost
+    '''
     theBuy = float(theBuy)
     theSell = float(theSell)
     actb = (theBuy - (theSell + 3.99)) / (theSell + 3.99)
@@ -16,6 +18,8 @@ def getROI(theBuy, theSell):
 
 
 def isGoodProfit(obj):
+    '''Looking for profit margins of >50%
+    '''
     theBuy = float(obj.latest_price.buy)
     theSell = float(obj.latest_price.sell)
     actb = (theBuy - (theSell + 3.99)) / (theSell + 3.99)
@@ -26,7 +30,9 @@ def isGoodProfit(obj):
 
 
 def retrievePage(url, proxy=None):
-
+    '''
+    Adding headers and handling proxies for requests
+    '''
     headers = {
 		"Accept":"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
 		"Accept-Encoding":"gzip,deflate,sdch",
@@ -53,62 +59,11 @@ def toAscii(content):
     return unicode(content).encode('ascii', 'ignore')
 
 
-def createOrUpdateMetaField(keyvalue, value1):
-    try:
-        obj = MetaTable_NR.objects.get(metakey=keyvalue)
-    except MetaTable_NR.DoesNotExist:
-        obj = MetaTable_NR(metakey=keyvalue, metatype="INTEGER")
-    obj.int_field = value1
-    obj.save()
-
-
-def updateBookCounts():
-    createOrUpdateMetaField("totalIndexed", AmazonMongoTradeIn.objects.count())
-    createOrUpdateMetaField("totalBooks", AmazonMongoTradeIn.objects.count())
-    createOrUpdateMetaField("totalProfitable", ProfitableBooks_NR.objects.all().count())
-
-
-'''def addProxy(type, proxy):
-    p = Proxy(proxy_type=type, ip_and_port=proxy)
-    p.save()'''
-
-# thread = ta.models.AmazonMongo.objects.get().fields(slice__prices=-1)
-
-
-def checkProfitable(a):
-    # print a
-    price = a.prices[-1]
-    if price.buy:
-        if price.buy > price.sell:
-            b = ProfitableBooks_NR()
-            b.amazon = a.amazon
-            b.price = price
-            b.timestamp = price.timestamp
-            b.save()
-
-
-def getProfitableBooks():
-    AmazonMongoTradeIn.objects.all().delete()
-    objs = AmazonMongoTradeIn_NJ.objects.values_list('id', flat=True)
-    tasks.process_lots_of_items_profitable.delay(objs)
-
-
 def detailAllBooks():
     objs = AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True)
     print 'Objs len is %d' % (len(objs),)
     print 'ok done with that'
     tasks.process_lots_of_items(objs)
-
-
-'''
-   New Detail book:
-
-   if div#more-buying-choice-content-div
-   if children divs == 3
-     parse first-child with span.price
-     parse third-child with div 2 span
-'''
-#//div[contains(concat(' ',normalize-space(@class),' '),' result')]
 
 
 def countBooksInCategory(url):
@@ -131,7 +86,7 @@ def countBooksInCategory(url):
     return resultsNoComma
 
 
-# Edited on Apr27
+# Edited on Jul23
 def getAmazonBooksOnTradeinPage(url, page):
     '''Gets all the books on the tradein page'''
     print ('Getting books for ' + url + '&page=' + str(page))
@@ -159,33 +114,11 @@ def getAmazonBooksOnTradeinPage(url, page):
         am.save()
 
 
-# not needed with latest
-def getDepartmentContainer(containers):
-    for container in containers:
-# Selects [New Releases, Departments, ...]
-        h2s = container.cssselect("h2")
-        for s in h2s:
-        #s = container.cssselect("h2")
-            print s.text_content()
-        #s = container.cssselect("div.narrowItemHeading")
-            matches = re.search(r'Department', s.text_content())
-            if matches:
-                return container
-    return None
-
-
-# not needed with latest
-def getFormatContainer(containers):
-    for container in containers:
-        s = container.cssselect("div.narrowItemHeading")
-        matches = re.search(r'Format', s[0].text_content())
-        if matches:
-            return container
-    return None
-
-
-# Works on Apr 27
+# Works on Jul 23
 def addFacetToScan(url):
+    '''
+    Adding a subdirectory under Facet
+    '''
     content = retrievePage(url)
 
     d = pq(content)
@@ -203,7 +136,6 @@ def addFacetToScan(url):
     s = s[1:]
 
     #Get all navigable directories
-    # s = thecontainer[0].xpath("./li/a/span[@class='refinementLink']")
     # No more to get -- this is a leaf node so add it to scan
     if not len(s):
         # print 'Adding finally!'
@@ -327,15 +259,8 @@ def parseUsedPage(amnj):
             print amnj.sell
             print amnj.profitable
         print 'After! ' + str(amnj)
-        #print result.cssselect('.condition')[0].text_content()
         break
 
-
-def fetchPage(url, add):
-    content = retrievePage(url)
-    # f = open('/home/seocortex/dropbox/web/static/testing-' + add + '.html', 'w')
-    # f.write(content)
-    # f.close()
 
 def addProxies(s):
     s = s.splitlines()

@@ -6,6 +6,7 @@ from django.contrib import admin
 
 class AmazonAdmin(admin.ModelAdmin):
     list_filter = ('is_profitable',)
+    exclude = ()
 
 
 admin.site.register(Amazon_NR)
