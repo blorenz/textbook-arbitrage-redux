@@ -60,7 +60,7 @@ def toAscii(content):
 
 
 def detailAllBooks():
-    objs = AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True)
+    objs = list(AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True))
     objs = random.shuffle(objs)
     print 'Objs len is %d' % (len(objs),)
     print 'ok done with that'
