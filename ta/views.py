@@ -81,8 +81,11 @@ def getDeals(request):
       referer = 'http://www.amazon.com/gp/product/%s/ref=as_li_ss_tl?ie=UTF8&tag=ngre-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=%s'
 
 
-    objs2 = AmazonMongoTradeIn_NJ.objects.filter(profitable__gte=10)
 
+    objs2 = AmazonMongoTradeIn_NJ.objects.filter(profitable__gte=10)
+    totalProfitable = objs2.count()
+
+    totalBooks = totalIndexed = AmazonMongoTradeIn_NJ.objects.all().count()
     for obj in iter(objs2):
         ctb = 0
         actb = 0
