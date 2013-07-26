@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import json
 
+
 def loginThing(request):
     if request.method == 'POST':
      username = request.POST['l']

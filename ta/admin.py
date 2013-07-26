@@ -9,6 +9,7 @@ class AmazonAdmin(admin.ModelAdmin):
     exclude = ()
 
 
+
 admin.site.register(Amazon_NR)
 admin.site.register(Amazon_Textbook_Section_NR)
 admin.site.register(AmazonMongoTradeIn)

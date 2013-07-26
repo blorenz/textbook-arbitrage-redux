@@ -196,7 +196,7 @@ class AmazonMongoTradeIn_NJ(models.Model):
     isbn10=models.CharField(max_length=250,null=True)
     author = models.CharField(max_length=250,null=True)
     productcode = models.CharField(primary_key=True,max_length=250)
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now=True,)
     buy = models.FloatField(null=True,blank=True) # Amount of Gift Card
     sell = models.FloatField(null=True,blank=True) # Amount a Seller sells it for
     profitable = models.IntegerField(null=True)

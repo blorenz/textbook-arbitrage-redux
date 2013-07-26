@@ -5,7 +5,7 @@ import requests
 from models import Proxy, AmazonMongoTradeIn, AmazonMongoTradeIn_NJ, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
 import re
 import tasks
-
+import random
 
 def getROI(theBuy, theSell):
     '''Calculate the Return On Investment of the book -- assuming 3.99 Shipping cost
@@ -61,6 +61,7 @@ def toAscii(content):
 
 def detailAllBooks():
     objs = AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True)
+    objs = random.shuffle(objs)
     print 'Objs len is %d' % (len(objs),)
     print 'ok done with that'
     tasks.process_lots_of_items(objs)
