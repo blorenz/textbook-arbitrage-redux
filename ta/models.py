@@ -189,7 +189,7 @@ class AmazonMongoTradeIn(models.Model):
     profitable = models.IntegerField(null=True)
 
 
-class AmazonMongoTradeIn_NJ(models.Model):
+class AmazonTradeIn(models.Model):
     title= models.CharField(max_length=250)
     pckey = models.CharField(max_length=250)
     isbn= models.CharField(max_length=250,null=True)
@@ -210,7 +210,7 @@ class AmazonMongoTradeIn_NJ(models.Model):
 
     def save(self, *args, **kwargs):
         self.is_profitable = self._is_profitable()
-        return super(AmazonMongoTradeIn_NJ, self).save(*args, **kwargs)
+        return super(AmazonTradeIn, self).save(*args, **kwargs)
 
 class Proxy(models.Model):
     proxy_type = models.CharField(max_length=10)

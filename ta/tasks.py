@@ -16,7 +16,7 @@ def process_chunk(pks, ignore_result=True):
     print 'Gonna process a chunk of ' + str(len(pks))
     for p in pks:
         print p
-        objs = AmazonMongoTradeIn_NJ.objects.filter(productcode=p)
+        objs = AmazonTradeIn.objects.filter(productcode=p)
         for obj in objs:
             print obj
             amazon.parseUsedPage(obj)

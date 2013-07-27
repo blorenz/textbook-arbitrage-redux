@@ -13,7 +13,7 @@ class AmazonAdmin(admin.ModelAdmin):
 admin.site.register(Amazon_NR)
 admin.site.register(Amazon_Textbook_Section_NR)
 admin.site.register(AmazonMongoTradeIn)
-admin.site.register(AmazonMongoTradeIn_NJ, AmazonAdmin)
+admin.site.register(AmazonTradeIn, AmazonAdmin)
 admin.site.register(AmazonRank_NR)
 admin.site.register(AmazonRankCategory_NR)
 admin.site.register(ATS_Middle_NR)

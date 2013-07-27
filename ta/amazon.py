@@ -2,7 +2,7 @@ from lxml import html as lhtml
 from pyquery import PyQuery as pq
 from lxml import etree
 import requests
-from models import Proxy, AmazonMongoTradeIn, AmazonMongoTradeIn_NJ, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
+from models import Proxy, AmazonMongoTradeIn, AmazonTradeIn, Amazon_Textbook_Section_NR, Amazon_NR, Price_NR, Book_NR, ProfitableBooks_NR, MetaTable_NR
 import re
 import tasks
 import random
@@ -60,7 +60,7 @@ def toAscii(content):
 
 
 def detailAllBooks():
-    objs = list(AmazonMongoTradeIn_NJ.objects.values_list('productcode', flat=True))
+    objs = list(AmazonTradeIn.objects.values_list('productcode', flat=True))
     random.shuffle(objs)
     print 'Objs len is %d' % (len(objs),)
     print 'ok done with that'
@@ -105,7 +105,7 @@ def getAmazonBooksOnTradeinPage(url, page):
         # print title
         # print pc
 
-        am = AmazonMongoTradeIn_NJ()
+        am = AmazonTradeIn()
 
         am.pckey = pc[0]
         am.title = title
@@ -139,7 +139,6 @@ def addFacetToScan(url):
     #Get all navigable directories
     # No more to get -- this is a leaf node so add it to scan
     if not len(s):
-        # print 'Adding finally!'
         addCategoryToScan(url)
 
     for cat in s:
@@ -148,12 +147,9 @@ def addFacetToScan(url):
         el = p1('a')
         if el:
             tasks.task_addFacetToScan.delay("http://www.amazon.com" + el[0].get('href'))
-            # print 'Adding facet %s' % ("http://www.amazon.com" + el[0].get('href'),)
-            # addFacetToScan("http://www.amazon.com" + el[0].get('href'))
-    # print 'Made it thru!'
 
 
-# Works on Apr 27
+# Works on Jul 23
 def addCategoryToScan(url):
     content = retrievePage(url)
     html = lhtml.fromstring(content)

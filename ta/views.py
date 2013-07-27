@@ -82,10 +82,10 @@ def getDeals(request):
 
 
 
-    objs2 = AmazonMongoTradeIn_NJ.objects.filter(profitable__gte=10)
+    objs2 = AmazonTradeIn.objects.filter(profitable__gte=10)
     totalProfitable = objs2.count()
 
-    totalBooks = totalIndexed = AmazonMongoTradeIn_NJ.objects.all().count()
+    totalBooks = totalIndexed = AmazonTradeIn.objects.all().count()
     for obj in iter(objs2):
         ctb = 0
         actb = 0

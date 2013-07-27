@@ -536,3 +536,13 @@ div.box {
 	border: 1px solid #8080FF;
 	background-color: #E5E5FF;
 }
+
+
+thead {
+    background: -webkit-linear-gradient(top, #454545, #333);
+    color: #eee;
+    font-family: Helvetica;
+    text-align: center;
+    font-size: 13px;
+    border-radius: 5px 5px 0 0;
+}
