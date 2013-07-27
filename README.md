@@ -35,7 +35,7 @@ After a long while, you will now have books.  Now that you have discovered lots 
 
     >>> detailAllBooks()
     
-Now your books will be there. Whoo!  Check for deals!!!!
+Now your books will (start to) be there. Whoo! It takes a while to index all. Check for deals!!!!
 
     python manage.py runserver
 
